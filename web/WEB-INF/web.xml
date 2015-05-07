@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>controlador.Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Salir</servlet-name>
+        <servlet-class>controlador.Salir</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListaUsuarios</servlet-name>
+        <servlet-class>controlador.ListaUsuarios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministrarUsuario</servlet-name>
+        <servlet-class>controlador.AdministrarUsuario</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Salir</servlet-name>
+        <url-pattern>/Salir</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListaUsuarios</servlet-name>
+        <url-pattern>/ListaUsuarios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministrarUsuario</servlet-name>
+        <url-pattern>/AdministrarUsuario</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
