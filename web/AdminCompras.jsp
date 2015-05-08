@@ -26,7 +26,7 @@
         <a href="Admin.jsp"/>Volver a menú administrador</a><br/><br/>
     <h1>Administrar Compras</h1>
     <h2>Agregar Compra</h2>
-    <form action="AdministrarUsuario" method="post">
+    <form action="FuncionesAdministrador" method="post">
         <input type="hidden" name="agrCompraUsuarioID" maxlength="6" value="<%=usuario%>"></input><br/>
         <div id="listaProductos"></div>
         Precio compra:     <input type="number" name="agrCompraPrecio_c" value="0.00" step="0.01" required></input> Pesos<br/>

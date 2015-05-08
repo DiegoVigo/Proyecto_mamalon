@@ -24,7 +24,7 @@
         <h1>Administración de usuarios</h1>
         <div>
             <h2>Agregar nuevo vendedor.</h2>
-            <form action="AdministrarUsuario" method="post">
+            <form action="FuncionesAdministrador" method="post">
                 UserID: <input type="text" name="agrUserID" maxlength="9" required></input><br/>
                 Nombre: <input type="text" name="agrNombreUser" required></input><br/>
                 Rol: <select name="agrRol" required>
@@ -43,7 +43,7 @@
         <br/>
         <div>
             <h2>Eliminar vendedor.</h2>
-            <form action="AdministrarUsuario" method="post">
+            <form action="FuncionesAdministrador" method="post">
                 <div id="listaNombreUsuariosEliminar"></div>
                 <div id="infoUsuarioEliminar"></div>
             </form>

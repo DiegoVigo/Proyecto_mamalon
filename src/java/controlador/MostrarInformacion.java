@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Almacen;
 import modelo.DatosBD;
 import modelo.Producto;
 import modelo.Sucursal;
@@ -57,6 +58,41 @@ public class MostrarInformacion extends HttpServlet {
                                 "<br/><input type=\"hidden\" name=\"modProductoID\" value=\""+mProducto.get(0).getProductoID()+"\"></input>\n"+
                                 "<input type=\"submit\" value=\"Modificar\"></input>");
                     out.println("</form>");
+                    break;
+                case "4": //Información cantidad de producto existente en almacén.
+                    String productoid = request.getParameter("productoID");
+                    String sucursalid = request.getParameter("almacenFrom");
+                    ArrayList<Almacen> almacen = bd.getProductoAlmacen(sucursalid, productoid);
+                    int cantidad_caja = 0, unidad_caja = 0, cantidad_unitario = 0, unidadEnCaja = 0, unidadSuelta = 0;
+                    String unidadencaja, unidadsuelta;
+                    out.println("</br>Descripción del producto en el almacen de origen");
+                    out.println("<table border=\"1\">" +
+                                "  <tr>" +
+                                "    <td>Cantidad de Cajas</td>" +
+                                "    <td>Unidades por caja</td>" +
+                                "    <td>Total unidades en caja</td>" +
+                                "    <td>Total unidades sueltas</td>" +
+                                "    <td>TOTAL unidades</td>" +
+                                "  </tr>");
+                    for(int i=0; i<almacen.size();i++){
+                        cantidad_caja = Integer.parseInt(almacen.get(i).getCantidad_caja());
+                        unidad_caja = Integer.parseInt(almacen.get(i).getUnidad_caja());
+                        cantidad_unitario = Integer.parseInt(almacen.get(i).getCantidad_unitario());
+                        unidadEnCaja = cantidad_caja * unidad_caja;
+                        unidadSuelta = cantidad_unitario - unidadEnCaja;
+                        
+                        unidadencaja = Integer.toString(unidadEnCaja);
+                        unidadsuelta = Integer.toString(unidadSuelta);
+                    out.println("<tr>" +
+                                "    <td>"+almacen.get(i).getCantidad_caja()+"</td>" +
+                                "    <td>"+almacen.get(i).getUnidad_caja()+"</td> " +
+                                "    <td>"+unidadencaja+"</td>" +
+                                "    <td>"+unidadsuelta+"</td>" +
+                                "    <td>"+almacen.get(i).getCantidad_unitario()+"</td>" +
+                                "  </tr>");
+                    }
+                    out.println("</table>");
+                    
                     break;
             }
         }

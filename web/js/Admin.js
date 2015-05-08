@@ -28,13 +28,46 @@
         });
     }
     
+    function listaProductosAlmacen(){
+        $.post('Listas', {  
+            op : 6
+        }, function(responseText){
+            $('#listaProductosAlmacen').html(responseText);
+        });
+    }
+    
+    function listaAlmacenTo(){
+        var a_from = $('#AlmacenFrom').val();
+        $.post('Listas', {  
+            almacenFrom : a_from,
+            op : 8
+        }, function(responseText){
+            $('#listaAlmacenTo').html(responseText);
+        });
+    }
+    
+    function MostrarInfoProductoAlmacen(){
+        var a_from = $('#AlmacenFrom').val();
+        var p_id = $('#AlmacenProductoID').val();
+        $.post('MostrarInformacion', {  
+            almacenFrom : a_from,
+            productoID : p_id,
+            op : 4
+        }, function(responseText){
+            $('#infoProductoAlmacen').html(responseText);
+        });
+    }
+    
+    
 $(document).ready(function(){
     listaUsuarios();
     listaProductos();
+    listaProductosAlmacen();
     listaNombreUsuarios();
     listaNombreUsuariosEliminar();
     listaProductosEliminar();
     listaProductosModificar();
+    listaAlmacenFrom();
     
     function listaUsuarios(){
         $.post('Listas', {  
@@ -81,6 +114,14 @@ $(document).ready(function(){
             op : 4
         }, function(responseText){
             $('#listaProductosModificar').html(responseText);
+        });
+    }
+    
+    function listaAlmacenFrom(){
+        $.post('Listas', {  
+            op : 7
+        }, function(responseText){
+            $('#listaAlmacenFrom').html(responseText);
         });
     }
 });

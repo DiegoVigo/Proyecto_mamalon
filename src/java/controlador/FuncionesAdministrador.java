@@ -14,7 +14,7 @@ import modelo.DatosBD;
 /*
  * @author jviveros
  */
-public class AdministrarUsuario extends HttpServlet {
+public class FuncionesAdministrador extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -101,13 +101,36 @@ public class AdministrarUsuario extends HttpServlet {
                     String t_compra = Float.toString(total_compra);
 //                    out.print(compraUsuarioID+"<br/>"+ compraProductoID+"<br/>"+ precio_compra+"<br/>"+ precio_venta+ "<br/>"+cantidad_caja+ "<br/>"+cantidad_cajau+ "<br/>"+cantidad_unit+"<br/>"+t_compra);
                     if (bd.setCompra(compraUsuarioID, compraProductoID, precio_compra, precio_venta, cantidad_caja, cantidad_cajau, cantidad_unit,t_compra)) {
-                        if (bd.setMovAlmacen("00000", compraUsuarioID,compraProductoID, cantidad_caja, cantidad_cajau, cantidad_unit)
+                        if (bd.setMovAlmacen("00000", compraUsuarioID,compraProductoID, cantidad_caja, cantidad_cajau, cantidad_unit,"compra")
                                 && bd.modificarPrecioProducto(compraProductoID, precio_venta)) {
                             response.sendRedirect(request.getHeader("referer"));
                         } else {
                             out.print("Error al agregar compra");
                         }
                     }
+                    break;
+                case "moverAlmacen":
+                    String AlmacenFrom = request.getParameter("AlmacenFrom");
+                    String AlmacenTo = request.getParameter("AlmacenTo");
+                    String movAlmacenUsuarioID = request.getParameter("movAlmacenUsuarioID");
+                    String AlmacenProductoID = request.getParameter("AlmacenProductoID");
+                    String movAlmacenCajas = request.getParameter("movAlmacenCajas");
+                    String movAlmacenCajau = request.getParameter("movAlmacenCajau");
+                    String movAlmacenUnit = request.getParameter("movAlmacenUnit");
+                    if(bd.setMovAlmacen(AlmacenFrom, movAlmacenUsuarioID, AlmacenProductoID, movAlmacenCajas, movAlmacenCajau, movAlmacenUnit, "venta") &&
+                       bd.setMovAlmacen(AlmacenTo, movAlmacenUsuarioID, AlmacenProductoID, movAlmacenCajas, movAlmacenCajau, movAlmacenUnit, "compra")){
+                        response.sendRedirect(request.getHeader("referer"));
+                    }else{
+                        out.print("Error al mover de almacen");
+                    }
+//                    out.println(AlmacenProductoID+"<br/>"+
+//                                AlmacenFrom+"<br/>"+
+//                                AlmacenTo+"<br/>"+
+//                                movAlmacenCajas+"<br/>"+
+//                                movAlmacenCajau+"<br/>"+
+//                                movAlmacenUnit+"<br/>"+
+//                                movAlmacenUsuarioID+"<br/>"
+//                            );
                     break;
             }
         }
@@ -128,7 +151,7 @@ public class AdministrarUsuario extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AdministrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FuncionesAdministrador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -146,7 +169,7 @@ public class AdministrarUsuario extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AdministrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FuncionesAdministrador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

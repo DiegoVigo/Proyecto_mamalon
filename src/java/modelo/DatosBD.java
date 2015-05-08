@@ -13,8 +13,11 @@ public class DatosBD {
     ArrayList<Usuario> listaUsuarios = new ArrayList();
     ArrayList<Usuario> soloUsuario = new ArrayList();
     ArrayList<Sucursal> listaSucursal = new ArrayList();
+    ArrayList<Sucursal> listaSucursalAlmacen = new ArrayList();
     ArrayList<Producto> listaProducto = new ArrayList();
     ArrayList<Producto> soloProducto = new ArrayList();
+    ArrayList<Almacen> listaAlmacen = new ArrayList();
+    ArrayList<Almacen> listaProductoAlmacen = new ArrayList();
 
     public String accesoUsuario(String usuario, String contrasena) throws SQLException, IOException {
         String rol = "";
@@ -89,7 +92,7 @@ public class DatosBD {
         return ban;
     }
 
-    public boolean setMovAlmacen(String sucursalID, String usuarioID, String productoID, String cantidad_c, String cantidad_cu, String cantidad_u) throws SQLException, IOException {
+    public boolean setMovAlmacen(String sucursalID, String usuarioID, String productoID, String cantidad_c, String cantidad_cu, String cantidad_u, String op) throws SQLException, IOException {
         boolean ban = false;
         String query, query1, query2;
         int caja = 0, caja_u = 0, unit = 0;
@@ -110,9 +113,15 @@ public class DatosBD {
         n_unit = Integer.parseInt(cantidad_u);
         if ((caja > 0 || unit > 0) && caja_u == n_caja_u) {
             if (n_caja > 0) {
-                upt_caja = n_caja + caja;
-                upt_caja_u = n_caja_u;
-                upt_unit = (n_caja * n_caja_u) + unit;
+                if(op.equals("compra")){
+                    upt_caja = n_caja + caja;
+                    upt_caja_u = n_caja_u;
+                    upt_unit = (n_caja * n_caja_u) + unit;
+                }else{
+                    upt_caja = caja - n_caja;
+                    upt_caja_u = n_caja_u;
+                    upt_unit = unit - (n_caja * n_caja_u);
+                }
             } else if (n_unit > 0) {
                 upt_caja = caja;
                 upt_caja_u = caja_u;
@@ -136,9 +145,8 @@ public class DatosBD {
             }
         }
         return ban;
-
     }
-
+    
     public boolean eliminarUsuario(String nombre) throws SQLException, IOException {
         boolean ban = false;
         Consultas c = new Consultas();
@@ -229,6 +237,20 @@ public class DatosBD {
         }
         return listaProducto;
     }
+    
+    public ArrayList<Sucursal> listaAlmacen(String sucursal) throws SQLException, IOException {
+        Consultas c = new Consultas();
+        String query = "SELECT * FROM Sucursal WHERE SucursalID <> ?";
+        String[] s = {sucursal};
+        java.sql.ResultSet rs = c.Consultar(query, s);
+        while (rs.next()) {
+            String SucursalID = rs.getString("SucursalID");
+            String Direccion = rs.getString("Direccion");
+            Sucursal su = new Sucursal(SucursalID, Direccion);
+            listaSucursalAlmacen.add(su);
+        }
+        return listaSucursalAlmacen;
+    }
 
     public ArrayList<Usuario> getUsuario(String nombre) throws SQLException, IOException {
         Consultas c = new Consultas();
@@ -261,6 +283,25 @@ public class DatosBD {
             soloProducto.add(p);
         }
         return soloProducto;
+    }
+    
+    public ArrayList<Almacen> getProductoAlmacen(String sucursalID, String productoID) throws SQLException, IOException{
+        Consultas c = new Consultas();
+        String query = "SELECT * FROM Almacen WHERE ProductoID = ? AND SucursalID = ?";
+        String[] s = {productoID,sucursalID};
+        java.sql.ResultSet rs = c.Consultar(query, s);
+        while (rs.next()) {
+            String SucursalID = rs.getString("SucursalID");
+            String UsuarioID = rs.getString("UsuarioID");
+            String ProductoID = rs.getString("ProductoID");
+            String Cantidad_caja = rs.getString("Cantidad_caja");
+            String Unidad_caja = rs.getString("Unidad_caja");
+            String Cantidad_unitario = rs.getString("Cantidad_unitario");
+            String Fecha = rs.getString("Fecha");
+            Almacen a = new Almacen(SucursalID, UsuarioID, ProductoID, Cantidad_caja, Unidad_caja, Cantidad_unitario, Fecha);
+            listaProductoAlmacen.add(a);
+        }
+        return listaProductoAlmacen;
     }
 //   public static void main(String args []) throws SQLException, IOException{
 //       DatosBD bd = new DatosBD();

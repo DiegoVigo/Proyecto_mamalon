@@ -11,7 +11,8 @@
         <meta http-equiv="Content-Language" content="ES">
         <meta charset="ISO-8859-1">
         <title>Administrador</title>
-        <script src="js/Admin.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/Admin.js"></script>
     </head>
     <body>
         <%
@@ -24,7 +25,7 @@
         <a href="AdminUsuarios.jsp"/>Administrar Usuarios</a><br>
         <a href="AdminProductos.jsp"/>Administrar Productos</a><br>
         <a href="AdminCompras.jsp"/>Administrar Compras</a><br>
-        <a href="Inventario"/>Inventario</a><br>
+        <a href="AdminAlmacen.jsp"/>Administrar Almacenes</a><br>
         <a href="VentasAdmin"/>Ventas</a><br>
         <%
         } else {

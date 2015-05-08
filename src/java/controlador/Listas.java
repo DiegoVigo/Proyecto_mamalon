@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Almacen;
 import modelo.DatosBD;
 import modelo.Producto;
 import modelo.Sucursal;
@@ -69,7 +70,7 @@ public class Listas extends HttpServlet {
                     }
                         out.println("</select><br/>");
                     break;
-                case "5"://Lista de productos
+                case "5"://Lista de productos agregar compra
                     out.println("<select id=\"agrCompraProductoID\" name=\"agrCompraProductoID\">");
                     out.println("<option selected disabled hidden value=''>Selecciona Producto</option>");
                     for(int i = 0; i< listaProductos.size();i++){
@@ -77,6 +78,41 @@ public class Listas extends HttpServlet {
                                     +listaProductos.get(i).getProductoID()+" - "+listaProductos.get(i).getNombre()+", "+listaProductos.get(i).getDescripcion()+"</option>");
                     }
                         out.println("</select><br/>");
+                    break;
+                case "6"://Lista de productos almacen
+                    out.println("Producto a mover: "
+                            + "<select id=\"AlmacenProductoID\" name=\"AlmacenProductoID\" onchange=\"MostrarInfoProductoAlmacen()\">");
+                    out.println("<option selected disabled hidden value=''>Selecciona Producto</option>");
+                    for(int i = 0; i< listaProductos.size();i++){
+                        out.println("<option value=\'"+listaProductos.get(i).getProductoID()+"\'>"
+                                    +listaProductos.get(i).getProductoID()+" - "+listaProductos.get(i).getNombre()+", "+listaProductos.get(i).getDescripcion()+"</option>");
+                    }
+                        out.println("</select><br/>");
+                    break;
+                case "7"://Lista almacen from
+                    ArrayList<Sucursal> listaSucursalAlmacen = bd.listaAlmacen("XXXXX");
+                    out.println("Almacen origen: "
+                            + "<select id=\"AlmacenFrom\" name=\"AlmacenFrom\" onchange=\"listaAlmacenTo()\">");
+                    out.println("<option selected disabled hidden value=''>Selecciona Almacen de salida</option>");
+                    for(int i = 0; i< listaSucursalAlmacen.size();i++){
+                        out.println("<option value=\'"+listaSucursalAlmacen.get(i).getSucursalID()+"\'>"
+                                    +listaSucursalAlmacen.get(i).getSucursalID()+" - "+listaSucursalAlmacen.get(i).getDireccion()+"</option>");
+                    }
+                        out.println("</select><br/>"
+                                + "<div id=\"listaAlmacenTo\"></div>");
+                    break;
+                case "8"://Lista almacen TO
+                    String almacenFrom = request.getParameter("almacenFrom");
+                    ArrayList<Sucursal> listaSucursalAlmacenTO = bd.listaAlmacen(almacenFrom);
+                    out.println("Almacen destino: "
+                            + "<select id=\"AlmacenTo\" name=\"AlmacenTo\" onchange=\"listaProductosAlmacen()\">");
+                    out.println("<option selected disabled hidden value=''>Selecciona Almacen de llegada</option>");
+                    for(int i = 0; i< listaSucursalAlmacenTO.size();i++){
+                        out.println("<option value=\'"+listaSucursalAlmacenTO.get(i).getSucursalID()+"\'>"
+                                    +listaSucursalAlmacenTO.get(i).getSucursalID()+" - "+listaSucursalAlmacenTO.get(i).getDireccion()+"</option>");
+                    }
+                        out.println("</select><br/>"
+                                + "<div id=\"listaProductosAlmacen\"></div>");
                     break;
             }
 

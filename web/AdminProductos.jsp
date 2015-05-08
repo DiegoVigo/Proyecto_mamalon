@@ -25,7 +25,7 @@
         <a href="Admin.jsp"/>Volver a menú administrador</a><br/><br/>
         <h1>Administrar Productos</h1>
         <h2>Agregar Producto</h2>
-         <form action="AdministrarUsuario" method="post">
+         <form action="FuncionesAdministrador" method="post">
                 ProductoID:  <input type="text" name="agrProductoID" maxlength="6" required></input><br/>
                 Nombre:      <input type="text" name="agrNombreProducto" required></input><br/>
                 Descripción: <input type="text" name="agrDescripcionProducto" required></input><br/>
@@ -34,12 +34,12 @@
                              <input type="submit" value="Agregar"></input>
         </form>
         <h2>Modificar Producto</h2>
-        <form action="AdministrarUsuario" method="post">
+        <form action="FuncionesAdministrador" method="post">
                 <div id="listaProductosModificar"></div>
                 <div id="infoProductoModificar"></div>
             </form>
         <h2>Eliminar Producto</h2>
-        <form action="AdministrarUsuario" method="post">
+        <form action="FuncionesAdministrador" method="post">
                 <div id="listaProductosEliminar"></div>
                 <div id="infoProductoEliminar"></div>
         </form>

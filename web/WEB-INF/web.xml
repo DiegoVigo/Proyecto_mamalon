@@ -9,12 +9,8 @@
         <servlet-class>controlador.Salir</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ListaUsuarios</servlet-name>
-        <servlet-class>controlador.ListaUsuarios</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AdministrarUsuario</servlet-name>
-        <servlet-class>controlador.AdministrarUsuario</servlet-class>
+        <servlet-name>FuncionesAdministrador</servlet-name>
+        <servlet-class>controlador.FuncionesAdministrador</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Listas</servlet-name>
@@ -33,12 +29,8 @@
         <url-pattern>/Salir</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ListaUsuarios</servlet-name>
-        <url-pattern>/ListaUsuarios</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdministrarUsuario</servlet-name>
-        <url-pattern>/AdministrarUsuario</url-pattern>
+        <servlet-name>FuncionesAdministrador</servlet-name>
+        <url-pattern>/FuncionesAdministrador</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Listas</servlet-name>
