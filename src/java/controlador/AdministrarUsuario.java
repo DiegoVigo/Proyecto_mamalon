@@ -88,7 +88,7 @@ public class AdministrarUsuario extends HttpServlet {
                     String cantidad_caja = request.getParameter("agrCompraCantidadCaja");
                     String cantidad_unit = request.getParameter("agrCompraCantidadUnit");
                     if (bd.setCompra(compraUsuarioID, compraProductoID, precio_compra, precio_venta, cantidad_caja, cantidad_unit)) {
-                        if (bd.setCompraAlmacenGral(compraProductoID, cantidad_caja, cantidad_unit)
+                        if (bd.setMovAlmacen("00000",compraProductoID, cantidad_caja, cantidad_unit)
                                 && bd.modificarPrecioProducto(compraProductoID, precio_venta)) {
                             response.sendRedirect(request.getHeader("referer"));
                         } else {

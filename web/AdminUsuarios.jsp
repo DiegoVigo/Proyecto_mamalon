@@ -54,11 +54,13 @@
         } else {
         %>
         <h1>No tienes acceso a esta página</h1>
+        <a href="index.jsp"/>Iniciar Sesión</a><br/><br/>
         <%
             }
         } else {
         %>
         <h1>No tienes acceso a esta página</h1>
+        <a href="index.jsp"/>Iniciar Sesión</a><br/><br/>
         <%    }
         %>
     </body>

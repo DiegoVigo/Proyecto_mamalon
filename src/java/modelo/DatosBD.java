@@ -91,14 +91,14 @@ public class DatosBD {
         return ban;
     }
 
-    public boolean setCompraAlmacenGral(String productoID, String cantidad_c, String cantidad_u) throws SQLException, IOException {
+    public boolean setMovAlmacen(String sucursalID, String productoID, String cantidad_c, String cantidad_u) throws SQLException, IOException {
         boolean ban = false;
         String query, query1, query2;
         int caja = 0, unit=0;
         Consultas c = new Consultas();
         ResultSet r;
-        query = "SELECT Cantidad_caja, Cantidad_unitario FROM Almacen WHERE ProductoID=?";
-        String[] s1 = {productoID};
+        query = "SELECT Cantidad_caja, Cantidad_unitario FROM Almacen WHERE ProductoID=? AND SucursalID=?";
+        String[] s1 = {productoID, sucursalID};
         r = c.Consultar(query, s1);
         while (r.next()) {
             caja = r.getInt("Cantidad_caja");
@@ -112,14 +112,14 @@ public class DatosBD {
             String update_caja = Integer.toString(u_caja);
             String update_unit = Integer.toString(u_unit);
             
-            query1 = "UPDATE Almacen SET Cantidad_caja = ?, Cantidad_unitario = ?, Fecha = GETDATE() WHERE ProductoID = ?";
-            String[] s = {update_caja, update_unit, productoID};
+            query1 = "UPDATE Almacen SET Cantidad_caja = ?, Cantidad_unitario = ?, Fecha = GETDATE() WHERE ProductoID = ? AND SucursalId = ?";
+            String[] s = {update_caja, update_unit, productoID, sucursalID};
             if(c.AltaBaja(query1, s) == 1){
                 ban = true;
             }
         }else{
-            query2 = "INSERT INTO Almacen (SucursalID, ProductoID, Cantidad_caja, Cantidad_unitario, Fecha) VALUES ('00000', ?, ?, ?, GETDATE())";
-            String[] s = {productoID, cantidad_c, cantidad_u};
+            query2 = "INSERT INTO Almacen (SucursalID, ProductoID, Cantidad_caja, Cantidad_unitario, Fecha) VALUES (?, ?, ?, ?, GETDATE())";
+            String[] s = {sucursalID,productoID, cantidad_c, cantidad_u};
             if (c.AltaBaja(query2, s) == 1) {
                 ban = true;
             }

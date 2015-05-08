@@ -16,6 +16,14 @@
         <servlet-name>AdministrarUsuario</servlet-name>
         <servlet-class>controlador.AdministrarUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Listas</servlet-name>
+        <servlet-class>controlador.Listas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MostrarInformacion</servlet-name>
+        <servlet-class>controlador.MostrarInformacion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>AdministrarUsuario</servlet-name>
         <url-pattern>/AdministrarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Listas</servlet-name>
+        <url-pattern>/Listas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MostrarInformacion</servlet-name>
+        <url-pattern>/MostrarInformacion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
