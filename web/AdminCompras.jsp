@@ -32,19 +32,10 @@
         Precio compra:     <input type="number" name="agrCompraPrecio_c" value="0.00" step="0.01" required></input> Pesos<br/>
         Precio venta:      <input type="number" name="agrCompraPrecio_v" value="0.00" step="0.01" required></input> Pesos<br/>
         Cantidad caja:     <input type="number" name="agrCompraCantidadCaja" value="0" required></input> Caja(s)<br/>
+        Unidades por caja: <input type="number" name="agrCompraCantidadCajau" value="0" required></input> Caja(s)<br/>
         Cantidad unidades: <input type="number" name="agrCompraCantidadUnit" value="0" required></input> unidad(es)<br/>
         <input type="hidden" name="opcion" value="agregarCompra"></input>
         <input type="submit" value="Agregar"></input>
-    </form>
-    <h2>Modificar Producto</h2>
-    <form action="AdministrarUsuario" method="post">
-        <div id="listaProductosModificar"></div>
-        <div id="infoProductoModificar"></div>
-    </form>
-    <h2>Eliminar Producto</h2>
-    <form action="AdministrarUsuario" method="post">
-        <div id="listaProductosEliminar"></div>
-        <div id="infoProductoEliminar"></div>
     </form>
     <%
     } else {

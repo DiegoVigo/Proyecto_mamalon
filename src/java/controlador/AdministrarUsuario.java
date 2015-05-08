@@ -81,22 +81,33 @@ public class AdministrarUsuario extends HttpServlet {
                     }
                     break;
                 case "agregarCompra":
+                    int cajas,u_cajas,total_unidades = 0;
+                    float p_compra, total_compra;
                     String compraUsuarioID = request.getParameter("agrCompraUsuarioID");
                     String compraProductoID = request.getParameter("agrCompraProductoID");
                     String precio_compra = request.getParameter("agrCompraPrecio_c");
                     String precio_venta = request.getParameter("agrCompraPrecio_v");
                     String cantidad_caja = request.getParameter("agrCompraCantidadCaja");
+                    String cantidad_cajau = request.getParameter("agrCompraCantidadCajau");
                     String cantidad_unit = request.getParameter("agrCompraCantidadUnit");
-                    if (bd.setCompra(compraUsuarioID, compraProductoID, precio_compra, precio_venta, cantidad_caja, cantidad_unit)) {
-                        if (bd.setMovAlmacen("00000",compraProductoID, cantidad_caja, cantidad_unit)
+                    if (cantidad_unit.equals("0")) {
+                        cajas = Integer.parseInt(cantidad_caja);
+                        u_cajas = Integer.parseInt(cantidad_cajau);
+                        total_unidades = cajas * u_cajas;
+                        cantidad_unit = Integer.toString(total_unidades);
+                    }
+                    p_compra = Float.parseFloat(precio_compra);
+                    total_compra = total_unidades * p_compra;
+                    String t_compra = Float.toString(total_compra);
+//                    out.print(compraUsuarioID+"<br/>"+ compraProductoID+"<br/>"+ precio_compra+"<br/>"+ precio_venta+ "<br/>"+cantidad_caja+ "<br/>"+cantidad_cajau+ "<br/>"+cantidad_unit+"<br/>"+t_compra);
+                    if (bd.setCompra(compraUsuarioID, compraProductoID, precio_compra, precio_venta, cantidad_caja, cantidad_cajau, cantidad_unit,t_compra)) {
+                        if (bd.setMovAlmacen("00000", compraUsuarioID,compraProductoID, cantidad_caja, cantidad_cajau, cantidad_unit)
                                 && bd.modificarPrecioProducto(compraProductoID, precio_venta)) {
                             response.sendRedirect(request.getHeader("referer"));
                         } else {
                             out.print("Error al agregar compra");
                         }
                     }
-
-//                    out.println(compraUsuarioID+compraProductoID+precio_compra+precio_venta+cantidad_caja+cantidad_unit);
                     break;
             }
         }

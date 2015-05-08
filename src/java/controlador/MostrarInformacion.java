@@ -33,6 +33,8 @@ public class MostrarInformacion extends HttpServlet {
                     out.println("<br/>Nombre  : "+eUsuario.get(0).getUsuarioNombre());
                     out.println("<br/>Rol     : "+eUsuario.get(0).getRol());
                     out.println("<br/>Sucursal: "+eUsuario.get(0).getSucursalID());
+                    out.println("<input type=\"hidden\" name=\"opcion\" value=\"eliminarUsuario\"></input>\n" +
+"                <input type=\"submit\" value=\"Eliminar\"></input>");
                     break;
                 case "2"://Información Producto a Eliminar
                     String producto = request.getParameter("eProducto");

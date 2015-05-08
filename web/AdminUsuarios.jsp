@@ -46,8 +46,6 @@
             <form action="AdministrarUsuario" method="post">
                 <div id="listaNombreUsuariosEliminar"></div>
                 <div id="infoUsuarioEliminar"></div>
-                <input type="hidden" name="opcion" value="eliminarUsuario"></input>
-                <input type="submit" value="Eliminar"></input>
             </form>
         </div>
         <%

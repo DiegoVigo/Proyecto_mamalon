@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /*
  * @author jviveros
@@ -78,12 +76,12 @@ public class DatosBD {
         return ban;
     }
 
-    public boolean setCompra(String usuarioID, String productoID, String precio_c, String precio_v, String cantidad_c, String cantidad_u) throws SQLException, IOException {
+    public boolean setCompra(String usuarioID, String productoID, String precio_c, String precio_v, String cantidad_c, String cantidad_cu, String cantidad_u, String t_compra) throws SQLException, IOException {
         boolean ban = false;
         String query;
         Consultas c = new Consultas();
-        query = "INSERT INTO Compra (UsuarioID, ProductoID, Precio_compra, Precio_venta, Fecha, Cantidad_caja, Cantidad_unitario) VALUES (?, ?, ?, ?, GETDATE(), ?, ?)";
-        String[] s = {usuarioID, productoID, precio_c, precio_v, cantidad_c, cantidad_u};
+        query = "INSERT INTO Compra (UsuarioID, ProductoID, Precio_compra, Precio_venta, Fecha, Cantidad_caja, Unidad_caja ,Cantidad_unitario, Total_compra) VALUES (?, ?, ?, ?, GETDATE(), ?, ?, ?, ?)";
+        String[] s = {usuarioID, productoID, precio_c, precio_v, cantidad_c, cantidad_cu, cantidad_u, t_compra};
         if (c.AltaBaja(query, s) == 1) {
             ban = true;
         }
@@ -91,35 +89,48 @@ public class DatosBD {
         return ban;
     }
 
-    public boolean setMovAlmacen(String sucursalID, String productoID, String cantidad_c, String cantidad_u) throws SQLException, IOException {
+    public boolean setMovAlmacen(String sucursalID, String usuarioID, String productoID, String cantidad_c, String cantidad_cu, String cantidad_u) throws SQLException, IOException {
         boolean ban = false;
         String query, query1, query2;
-        int caja = 0, unit=0;
+        int caja = 0, caja_u = 0, unit = 0;
+        int n_caja = 0, n_caja_u = 0, n_unit = 0;
+        int upt_caja = 0, upt_caja_u = 0, upt_unit = 0;
         Consultas c = new Consultas();
         ResultSet r;
-        query = "SELECT Cantidad_caja, Cantidad_unitario FROM Almacen WHERE ProductoID=? AND SucursalID=?";
+        query = "SELECT Cantidad_caja, Unidad_caja, Cantidad_unitario FROM Almacen WHERE ProductoID=? AND SucursalID=?";
         String[] s1 = {productoID, sucursalID};
         r = c.Consultar(query, s1);
         while (r.next()) {
             caja = r.getInt("Cantidad_caja");
+            caja_u = r.getInt("Unidad_caja");
             unit = r.getInt("Cantidad_unitario");
         }
-        if (caja > 0 || unit > 0) {
-            int n_caja = Integer.parseInt(cantidad_c);
-            int n_unit = Integer.parseInt(cantidad_u);
-            int u_caja = n_caja + caja;
-            int u_unit = n_unit + unit;
-            String update_caja = Integer.toString(u_caja);
-            String update_unit = Integer.toString(u_unit);
-            
-            query1 = "UPDATE Almacen SET Cantidad_caja = ?, Cantidad_unitario = ?, Fecha = GETDATE() WHERE ProductoID = ? AND SucursalId = ?";
-            String[] s = {update_caja, update_unit, productoID, sucursalID};
-            if(c.AltaBaja(query1, s) == 1){
+        n_caja = Integer.parseInt(cantidad_c);
+        n_caja_u = Integer.parseInt(cantidad_cu);
+        n_unit = Integer.parseInt(cantidad_u);
+        if ((caja > 0 || unit > 0) && caja_u == n_caja_u) {
+            if (n_caja > 0) {
+                upt_caja = n_caja + caja;
+                upt_caja_u = n_caja_u;
+                upt_unit = (n_caja * n_caja_u) + unit;
+            } else if (n_unit > 0) {
+                upt_caja = caja;
+                upt_caja_u = caja_u;
+                upt_unit = unit + n_unit;
+            }
+
+            String update_caja = Integer.toString(upt_caja);
+            String update_caja_u = Integer.toString(upt_caja_u);
+            String update_unit = Integer.toString(upt_unit);
+
+            query1 = "UPDATE Almacen SET Cantidad_caja = ?, Unidad_caja = ?, Cantidad_unitario = ?, Fecha = GETDATE() WHERE ProductoID = ? AND SucursalID = ?";
+            String[] s = {update_caja, update_caja_u, update_unit, productoID, sucursalID};
+            if (c.AltaBaja(query1, s) == 1) {
                 ban = true;
             }
-        }else{
-            query2 = "INSERT INTO Almacen (SucursalID, ProductoID, Cantidad_caja, Cantidad_unitario, Fecha) VALUES (?, ?, ?, ?, GETDATE())";
-            String[] s = {sucursalID,productoID, cantidad_c, cantidad_u};
+        } else {
+            query2 = "INSERT INTO Almacen (SucursalID, UsuarioID, ProductoID, Cantidad_caja, Unidad_caja, Cantidad_unitario, Fecha) VALUES (?, ?, ?, ?, ?, ?, GETDATE())";
+            String[] s = {sucursalID, usuarioID, productoID, cantidad_c, cantidad_cu, cantidad_u};
             if (c.AltaBaja(query2, s) == 1) {
                 ban = true;
             }

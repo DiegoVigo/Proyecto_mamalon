@@ -10,7 +10,7 @@
     
     function MostrarInfoProducto(){
         var productoID = $('#elimProducto').val();
-        $.post('ListaUsuarios', {  
+        $.post('MostrarInformacion', {  
             op : 2,
             eProducto : productoID
         }, function(responseText){
@@ -20,7 +20,7 @@
     
     function ModificarInfoProducto(){
         var productoIDm = $('#modProducto').val();
-        $.post('ListaUsuarios', {  
+        $.post('MostrarInformacion', {  
             op : 3,
             mProducto : productoIDm
         }, function(responseText){

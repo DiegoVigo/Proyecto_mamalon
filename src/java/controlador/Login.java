@@ -36,6 +36,11 @@ public class Login extends HttpServlet {
                     session.setAttribute("rol", bd.accesoUsuario(usuario, contrasena));
                     response.sendRedirect("Usuario.jsp");
                     break;
+                case "almacen":
+                    session.setAttribute("usuario", usuario);
+                    session.setAttribute("rol", bd.accesoUsuario(usuario, contrasena));
+                    response.sendRedirect("Almacen.jsp");
+                    break;
                 default:
                     out.println("Usuario o Contraseña incorrectos");
                     break;
