@@ -111,7 +111,7 @@ public class DatosBD {
         n_caja = Integer.parseInt(cantidad_c);
         n_caja_u = Integer.parseInt(cantidad_cu);
         n_unit = Integer.parseInt(cantidad_u);
-        if ((caja > 0 || unit > 0) && caja_u == n_caja_u) {
+        if ((caja > -1 || unit > -1) && caja_u == n_caja_u) {
             if (n_caja > 0) {
                 if(op.equals("compra")){
                     upt_caja = n_caja + caja;
@@ -123,9 +123,16 @@ public class DatosBD {
                     upt_unit = unit - (n_caja * n_caja_u);
                 }
             } else if (n_unit > 0) {
-                upt_caja = caja;
-                upt_caja_u = caja_u;
-                upt_unit = unit + n_unit;
+                if(op.equals("compra")){
+                    upt_caja = caja;
+                    upt_caja_u = caja_u;
+                    upt_unit = unit + n_unit;  
+                }else{
+                    upt_caja = (unit - n_unit) / caja_u;
+                    upt_caja_u = caja_u;
+                    upt_unit = unit - n_unit;
+                }
+               
             }
 
             String update_caja = Integer.toString(upt_caja);

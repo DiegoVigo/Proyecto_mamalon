@@ -79,7 +79,7 @@ public class MostrarInformacion extends HttpServlet {
                         unidad_caja = Integer.parseInt(almacen.get(i).getUnidad_caja());
                         cantidad_unitario = Integer.parseInt(almacen.get(i).getCantidad_unitario());
                         unidadEnCaja = cantidad_caja * unidad_caja;
-                        unidadSuelta = cantidad_unitario - unidadEnCaja;
+                        unidadSuelta = cantidad_unitario - unidadEnCaja ;
                         
                         unidadencaja = Integer.toString(unidadEnCaja);
                         unidadsuelta = Integer.toString(unidadSuelta);

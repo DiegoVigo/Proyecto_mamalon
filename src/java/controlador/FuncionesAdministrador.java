@@ -110,6 +110,7 @@ public class FuncionesAdministrador extends HttpServlet {
                     }
                     break;
                 case "moverAlmacen":
+                    int cajas1,u_cajas1,total_unidades1 = 0;
                     String AlmacenFrom = request.getParameter("AlmacenFrom");
                     String AlmacenTo = request.getParameter("AlmacenTo");
                     String movAlmacenUsuarioID = request.getParameter("movAlmacenUsuarioID");
@@ -117,6 +118,12 @@ public class FuncionesAdministrador extends HttpServlet {
                     String movAlmacenCajas = request.getParameter("movAlmacenCajas");
                     String movAlmacenCajau = request.getParameter("movAlmacenCajau");
                     String movAlmacenUnit = request.getParameter("movAlmacenUnit");
+                    if (movAlmacenUnit.equals("0")) {
+                        cajas1 = Integer.parseInt(movAlmacenCajas);
+                        u_cajas1 = Integer.parseInt(movAlmacenCajau);
+                        total_unidades1 = cajas1 * u_cajas1;
+                        movAlmacenUnit = Integer.toString(total_unidades1);
+                    }
                     if(bd.setMovAlmacen(AlmacenFrom, movAlmacenUsuarioID, AlmacenProductoID, movAlmacenCajas, movAlmacenCajau, movAlmacenUnit, "venta") &&
                        bd.setMovAlmacen(AlmacenTo, movAlmacenUsuarioID, AlmacenProductoID, movAlmacenCajas, movAlmacenCajau, movAlmacenUnit, "compra")){
                         response.sendRedirect(request.getHeader("referer"));
