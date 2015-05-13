@@ -92,7 +92,7 @@ public class DatosBD {
         return ban;
     }
 
-    public boolean setMovAlmacen(String sucursalID, String usuarioID, String productoID, String cantidad_c, String cantidad_cu, String cantidad_u, String op) throws SQLException, IOException {
+    public boolean setMovAlmacen(String tabla, String sucursalID, String usuarioID, String productoID, String cantidad_c, String cantidad_cu, String cantidad_u, String op) throws SQLException, IOException {
         boolean ban = false;
         String query, query1, query2;
         int caja = 0, caja_u = 0, unit = 0;
@@ -100,7 +100,7 @@ public class DatosBD {
         int upt_caja = 0, upt_caja_u = 0, upt_unit = 0;
         Consultas c = new Consultas();
         ResultSet r;
-        query = "SELECT Cantidad_caja, Unidad_caja, Cantidad_unitario FROM Almacen WHERE ProductoID=? AND SucursalID=?";
+        query = "SELECT Cantidad_caja, Unidad_caja, Cantidad_unitario FROM "+tabla+" WHERE ProductoID=? AND SucursalID=?";
         String[] s1 = {productoID, sucursalID};
         r = c.Consultar(query, s1);
         while (r.next()) {
@@ -132,20 +132,18 @@ public class DatosBD {
                     upt_caja_u = caja_u;
                     upt_unit = unit - n_unit;
                 }
-               
             }
-
             String update_caja = Integer.toString(upt_caja);
             String update_caja_u = Integer.toString(upt_caja_u);
             String update_unit = Integer.toString(upt_unit);
 
-            query1 = "UPDATE Almacen SET Cantidad_caja = ?, Unidad_caja = ?, Cantidad_unitario = ?, Fecha = GETDATE() WHERE ProductoID = ? AND SucursalID = ?";
+            query1 = "UPDATE "+tabla+" SET Cantidad_caja = ?, Unidad_caja = ?, Cantidad_unitario = ?, Fecha = GETDATE() WHERE ProductoID = ? AND SucursalID = ?";
             String[] s = {update_caja, update_caja_u, update_unit, productoID, sucursalID};
             if (c.AltaBaja(query1, s) == 1) {
                 ban = true;
             }
         } else {
-            query2 = "INSERT INTO Almacen (SucursalID, UsuarioID, ProductoID, Cantidad_caja, Unidad_caja, Cantidad_unitario, Fecha) VALUES (?, ?, ?, ?, ?, ?, GETDATE())";
+            query2 = "INSERT INTO "+tabla+" (SucursalID, UsuarioID, ProductoID, Cantidad_caja, Unidad_caja, Cantidad_unitario, Fecha) VALUES (?, ?, ?, ?, ?, ?, GETDATE())";
             String[] s = {sucursalID, usuarioID, productoID, cantidad_c, cantidad_cu, cantidad_u};
             if (c.AltaBaja(query2, s) == 1) {
                 ban = true;

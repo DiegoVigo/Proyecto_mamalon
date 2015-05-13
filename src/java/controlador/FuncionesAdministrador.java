@@ -101,7 +101,7 @@ public class FuncionesAdministrador extends HttpServlet {
                     String t_compra = Float.toString(total_compra);
 //                    out.print(compraUsuarioID+"<br/>"+ compraProductoID+"<br/>"+ precio_compra+"<br/>"+ precio_venta+ "<br/>"+cantidad_caja+ "<br/>"+cantidad_cajau+ "<br/>"+cantidad_unit+"<br/>"+t_compra);
                     if (bd.setCompra(compraUsuarioID, compraProductoID, precio_compra, precio_venta, cantidad_caja, cantidad_cajau, cantidad_unit,t_compra)) {
-                        if (bd.setMovAlmacen("00000", compraUsuarioID,compraProductoID, cantidad_caja, cantidad_cajau, cantidad_unit,"compra")
+                        if (bd.setMovAlmacen("Almacen","00000", compraUsuarioID,compraProductoID, cantidad_caja, cantidad_cajau, cantidad_unit,"compra")
                                 && bd.modificarPrecioProducto(compraProductoID, precio_venta)) {
                             response.sendRedirect(request.getHeader("referer"));
                         } else {
@@ -124,8 +124,8 @@ public class FuncionesAdministrador extends HttpServlet {
                         total_unidades1 = cajas1 * u_cajas1;
                         movAlmacenUnit = Integer.toString(total_unidades1);
                     }
-                    if(bd.setMovAlmacen(AlmacenFrom, movAlmacenUsuarioID, AlmacenProductoID, movAlmacenCajas, movAlmacenCajau, movAlmacenUnit, "venta") &&
-                       bd.setMovAlmacen(AlmacenTo, movAlmacenUsuarioID, AlmacenProductoID, movAlmacenCajas, movAlmacenCajau, movAlmacenUnit, "compra")){
+                    if(bd.setMovAlmacen("Almacen",AlmacenFrom, movAlmacenUsuarioID, AlmacenProductoID, movAlmacenCajas, movAlmacenCajau, movAlmacenUnit, "venta") &&
+                       bd.setMovAlmacen("Almacen",AlmacenTo, movAlmacenUsuarioID, AlmacenProductoID, movAlmacenCajas, movAlmacenCajau, movAlmacenUnit, "compra")){
                         response.sendRedirect(request.getHeader("referer"));
                     }else{
                         out.print("Error al mover de almacen");
@@ -137,6 +137,34 @@ public class FuncionesAdministrador extends HttpServlet {
 //                                movAlmacenCajau+"<br/>"+
 //                                movAlmacenUnit+"<br/>"+
 //                                movAlmacenUsuarioID+"<br/>"
+//                            );
+                    break;
+                    case "moverTienda":
+                    int cajas2,u_cajas2,total_unidades2 = 0;
+                    String Tienda = request.getParameter("Tienda");
+                    String movTiendaUsuarioID = request.getParameter("movTiendaUsuarioID");
+                    String TiendaProductoID = request.getParameter("TiendaProductoID");
+                    String movTiendaCajas = request.getParameter("movTiendaCajas");
+                    String movTiendaCajau = request.getParameter("movTiendaCajau");
+                    String movTiendaUnit = request.getParameter("movTiendaUnit");
+                    if (movTiendaUnit.equals("0")) {
+                        cajas2 = Integer.parseInt(movTiendaCajas);
+                        u_cajas2 = Integer.parseInt(movTiendaCajau);
+                        total_unidades2 = cajas2 * u_cajas2;
+                        movTiendaUnit = Integer.toString(total_unidades2);
+                    }
+                    if(bd.setMovAlmacen("Almacen",Tienda, movTiendaUsuarioID, TiendaProductoID, movTiendaCajas, movTiendaCajau, movTiendaUnit, "venta") &&
+                       bd.setMovAlmacen("Tienda",Tienda, movTiendaUsuarioID, TiendaProductoID, movTiendaCajas, movTiendaCajau, movTiendaUnit, "compra")){
+                        response.sendRedirect(request.getHeader("referer"));
+                    }else{
+                        out.print("Error al mover a Tienda");
+                    }
+//                    out.println(TiendaProductoID+"<br/>"+
+//                                Tienda+"<br/>"+
+//                                movTiendaCajas+"<br/>"+
+//                                movTiendaCajau+"<br/>"+
+//                                movTiendaUnit+"<br/>"+
+//                                movTiendaUsuarioID+"<br/>"
 //                            );
                     break;
             }

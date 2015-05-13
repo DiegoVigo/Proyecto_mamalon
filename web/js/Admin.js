@@ -58,6 +58,18 @@
         });
     }
     
+    function MostrarInfoProductoTienda(){
+        var a_from = $('#Tienda').val();
+        var p_id = $('#TiendaProductoID').val();
+        $.post('MostrarInformacion', {  
+            almacenFrom : a_from,
+            productoID : p_id,
+            op : 4
+        }, function(responseText){
+            $('#infoProductoTienda').html(responseText);
+        });
+    }
+    
     
 $(document).ready(function(){
     listaUsuarios();
@@ -68,6 +80,8 @@ $(document).ready(function(){
     listaProductosEliminar();
     listaProductosModificar();
     listaAlmacenFrom();
+    listaTienda();
+    listaTiendaProducto();
     
     function listaUsuarios(){
         $.post('Listas', {  
@@ -122,6 +136,20 @@ $(document).ready(function(){
             op : 7
         }, function(responseText){
             $('#listaAlmacenFrom').html(responseText);
+        });
+    }
+    function listaTienda(){
+        $.post('Listas', {  
+            op : 9
+        }, function(responseText){
+            $('#listaTienda').html(responseText);
+        });
+    }
+    function listaTiendaProducto(){
+        $.post('Listas', {  
+            op : 10
+        }, function(responseText){
+            $('#listaTiendaProducto').html(responseText);
         });
     }
 });

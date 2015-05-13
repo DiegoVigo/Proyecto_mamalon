@@ -26,6 +26,7 @@
         <a href="AdminProductos.jsp"/>Administrar Productos</a><br>
         <a href="AdminCompras.jsp"/>Administrar Compras</a><br>
         <a href="AdminAlmacen.jsp"/>Administrar Almacenes</a><br>
+        <a href="AdminTienda.jsp"/>Administrar Tiendas</a><br>
         <a href="VentasAdmin"/>Ventas</a><br>
         <%
         } else {
